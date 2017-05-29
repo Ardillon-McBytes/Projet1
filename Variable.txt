@@ -1,0 +1,12 @@
+int choixMenu = 0,
+	choixNiveau = 0,
+	mouvement = 0, // (1=haut, 2=bas, 3=gauche 4=droite)
+	action = 0, // ()
+	pouvoir = 0,
+	typeMonstre = 0,
+	niveau = 0,
+	score = 0,
+	argent = 0,
+
+string nomJoueur,
+	   mdpJoueur,

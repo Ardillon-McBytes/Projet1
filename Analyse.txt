@@ -1,0 +1,175 @@
+Analyse Jeu
+
+Main :
+
+	Compte utilisateur
+
+	Tant que le jeux est ouvert
+		Fait:
+			Choix= Affiche le Menu
+				Selon le choix 
+					cas jeu
+						Choix Du niveau
+					cas option
+						Affiche les options
+					cas Score
+						Affiche Les scores
+					cas Shop
+						Affiche la shop
+					Cas personalisation
+						Affiche les option de personalisation
+					cas Quitter
+						Quitte
+		Tant que le choix != Jeu
+
+		Selon le choix du niveau
+			Initialise le niveau ( affichage , donnée)
+			Affiche le niveau
+			
+		Tant jeu != fin
+
+			Fait
+				Attend la saisi du joueur
+				Si choix d'Action = impossible
+					Affiche message erreur
+			tant que le choix d'action est impossible
+
+			Fait l'action que le joueur choisi
+				Si mouvement
+					Déplace tout vers la direction demander
+					Si mouvement impossible/inutile
+						Rien
+					Si Deux bloc avec la même entiter se "frappe"
+						Fusionne
+						Score += X
+					Si le joueur touche un monstre
+						Monstre - X pv (X = base + item + pouvoir)
+						Score += X
+				Si action (pouvoir / objet)
+					Effectue l'Action
+				
+			Ajout de bloc/monstre
+			Verifie si une action/mouvement est encore possible
+
+			Si aucun mouvement impossible
+				Verifie si un action est possible
+				Si action possible
+					Affiche message + option disponible
+				sinon	
+				jeu = fin
+				Affiche message de game Over
+
+			Si Niveau = terminer ( score = XXX?)
+				Affiche message victoire
+				Initialise le prochain niveau ( affichage , donnée)
+				Affiche le prochain niveau
+
+			Si tout les niveau = fini
+				Affiche message victoire
+				Donne récompense
+				jeu = fin
+	
+		fin tant que jeu !=fini
+	
+		Connection au serveur
+		
+		Si connecion = fail
+		Tant que Choix = recommencer
+			Message erreur + choix recommencer ou quitter
+			(si quitter, enregistrement perdu)
+		Si connection = réussie
+			Enregistrement Score, argent, items, etc
+
+Methode :
+
+Compte utilisateur 
+	Si Connection sur le serveur
+		Demande Joueur inscrit ou non
+		Si oui, 
+			Tant que les information sont invalide
+				Demande nom + mdp
+		Si non,
+			Tant que les information sont invalide ou déja utilisé
+				Demande nouveau nom + mdp
+			Enregistre dans le serveur
+		Ferme le serveur
+	Si non
+		Message erreur
+			
+
+Afficher Menu
+
+	Affiche Backgroud
+	Affiche bouton Jouer + bouton Shop + bouton option + bouton score + personalisation
+	cliquer bouton
+
+
+Afficher Option
+
+	Affiche Fenetre
+	Affiche bouton Option (Musique, choix musique, choix backgroud, changement de nom/mdp, etc.)
+	Attend la saisir du bouton quitter ou d'une option
+
+Afficher Score
+	Si Connection sur le serveur est réussie
+		trier liste de score
+		Afficher liste de score
+		Déconection du serveur
+		Attend la saisir du bouton quitter
+	Si non
+		Message erreur
+
+Afficher shop
+	Affiche les informations du joueurs (Argent, nom)
+	Affiche les choix d'achat (pouvoir, objet, clef?, etc)
+	Si pouvoir = déja acheter
+		Changer image
+	Si achat
+		Si le pouvoir n'est pas déja acheter
+			
+			Si argent = insuffisant
+				Message d'erreur
+			Si argent = suffisant
+				 Si Connection sur le serveur est réussie
+					Argent - Cout
+					Ajout de l'item/pouvoir
+					Fermeture connection serveur
+				Si non
+					Message erreur
+
+	Attend la saisir du bouton quitter
+
+Choix niveau
+
+	Affiche les différents choix de niveau
+	Attend le choix de l'utilisateur (niveau ou quitter)
+	Selon le choix
+		choix 1,2,3,4..... = retourne le choix
+
+		choix quitter = Retour au menu principal
+
+Menu Personalisation
+	Affiche le menu 
+	Tant que le choix != quitter
+		Demande au joueur ce qu'il veut modifier ( apparance joueur ou monstre/ Apparence jeu / équippement / etc )
+		Selon le choix
+		Cas apparance joueur / monstre
+			Affiche les différentes partie modifiable et attend une saisie
+			Selon la saisie (joueur ou type de monstre)
+				Affiche les options de modification (couleur, image)
+		Cas apparence jeu
+			Affiche les différentes apparance de backgroud et attend une saisie
+			Selon la saisie
+				Modifi le bacground
+		Cas équippement / sort
+			Affiche le joueur avec les sont équippement actuel et disponible
+			Si le jouer saisie un objet équiper
+				Enleve l'équipement
+			Si le joueur saisie un objet de son inventaire
+				Si un équipement est déja a l'enplacement
+					Switch
+				Sinon
+					Ajoute l'objet a l'enplacement approprié
+		Cas qutter
+			QUitter
+	Fin tant que
